@@ -1877,7 +1877,7 @@ main {
 }
 
 [data-page="publications"] .blog-text strong {
-  font-weight: var(--fw-600);
+  font-weight: 700;
 }
 
 .project-detail-header {
