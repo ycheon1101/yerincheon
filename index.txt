@@ -1,4 +1,4 @@
-vCard - Personal Portfolio
+YerinCheon's web
 
 # sidebar
 
@@ -26,8 +26,7 @@ https://www.linkedin.com/in/ycheon
 GitHub
 https://github.com/ycheon1101
 
-Resume (PDF, sidebar icon - new tab)
-./assets/pdf/Resume_YerinCheon.pdf
+Resume (temporarily unavailable; sidebar button disabled)
 
 # navbar
 

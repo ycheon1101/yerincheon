@@ -512,9 +512,14 @@ main {
   height: 20px;
 }
 
-.social-link-resume:hover .social-resume-img,
-.social-link-resume:focus .social-resume-img {
+.social-link-resume:not(:disabled):hover .social-resume-img,
+.social-link-resume:not(:disabled):focus .social-resume-img {
   filter: brightness(0) invert(0.88);
+}
+
+.social-link-resume:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 

@@ -1,2 +1,5 @@
 node_modules/
 dist/
+
+# Keep the resume locally while it is unavailable on the public website.
+assets/pdf/Resume_YerinCheon.pdf

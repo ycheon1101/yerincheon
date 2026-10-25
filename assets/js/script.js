@@ -285,7 +285,7 @@ if (form && formBtn) {
 
 
 
-// page navigation + URL sync (paths like /ycheon/projects on GitHub Pages)
+// page navigation + URL sync (paths like /yerincheon/projects on GitHub Pages)
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 const PAGE_KEYS = new Set([

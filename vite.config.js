@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 
-// GitHub Pages serves this repo at /ycheon/ — set VITE_BASE=/ycheon/ when building for deploy if you switch to Vite build output.
+// GitHub Pages serves the source at /yerincheon/. If deploying Vite build output,
+// build with `vite build --base=/yerincheon/` instead of the default root base.
 export default defineConfig({
   root: ".",
   server: {
