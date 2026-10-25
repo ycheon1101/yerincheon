@@ -1453,6 +1453,25 @@ main {
   padding-left: 18px;
 }
 
+.publication-project-link { color: inherit; }
+.publication-project-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+}
+.publication-project-link:focus-visible::after {
+  outline: 2px solid var(--orange-yellow-crayola);
+  outline-offset: 3px;
+}
+.publication-item--radar:hover .publication-title {
+  color: var(--orange-yellow-crayola);
+}
+.publication-figure--radar img {
+  object-fit: contain;
+  object-position: center;
+}
+
 
 
 
@@ -1812,6 +1831,10 @@ main {
 }
 
 .blog-post-item > a:hover .blog-banner-box img { transform: scale(1.1); }
+
+.blog-banner-box--radar { background: white; }
+.blog-banner-box--radar img { object-fit: contain; padding: 10px; }
+.blog-post-item--radar > a:hover .blog-banner-box img { transform: none; }
 
 .blog-content { padding: 15px; }
 

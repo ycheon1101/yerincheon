@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doppler-aided Position-Velocity Tracking of Hidden Objects using mmWave Radar</title>
+  <meta name="description" content="A real-world indoor NLoS radar dataset and a temporal framework for tracking the position and velocity of hidden moving targets from full Range–Azimuth–Doppler sequences.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://ycheon1101.github.io/yerincheon/radar_nlos/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Doppler-aided Position-Velocity Tracking of Hidden Objects using mmWave Radar">
+  <meta property="og:description" content="A synchronized indoor NLoS radar dataset and a temporal framework for joint position and velocity tracking of hidden targets.">
+  <meta property="og:url" content="https://ycheon1101.github.io/yerincheon/radar_nlos/">
+  <meta property="og:image" content="https://ycheon1101.github.io/yerincheon/radar_nlos/assets/teaser.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero wrap">
+    <h1>Doppler-aided Position-Velocity Tracking<br class="desktop-break"> of Hidden Objects using mmWave Radar</h1>
+    <div class="authors" aria-label="Authors and affiliations">
+      <div><a class="author-name" href="https://ycheon1101.github.io/yerincheon/" target="_blank" rel="noopener">Yerin Cheon<sup>*</sup></a><span class="affiliation">Stony Brook University</span></div>
+      <div><a class="author-name" href="https://kushgarg.me/" target="_blank" rel="noopener">Kush Garg<sup>*</sup></a><span class="affiliation">Delhi Technological University</span></div>
+      <div><a class="author-name" href="https://akshatdave.github.io/" target="_blank" rel="noopener">Akshat Dave</a><span class="affiliation">Stony Brook University</span></div>
+    </div>
+    <p class="equal">* Equal contribution</p>
+    <div class="resources" aria-label="Project resources">
+      <a class="resource primary" href="assets/paper.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>Paper <span class="resource-detail">PDF</span></a>
+      <button class="resource unavailable" type="button" disabled title="The code repository is not available yet"><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.57-.29-5.27-1.28-5.27-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.16 1.18a10.98 10.98 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.23 2.77.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.41-2.7 5.39-5.28 5.68.42.36.79 1.06.79 2.14v3.27c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>Code <span class="resource-detail">Coming soon</span></button>
+      <button class="resource unavailable" type="button" disabled title="The arXiv version is not available yet">arXiv <span class="resource-detail">Coming soon</span></button>
+      <button class="resource unavailable" type="button" disabled title="The BibTeX entry is not available yet">BibTeX <span class="resource-detail">Coming soon</span></button>
+    </div>
+    <nav class="section-links" aria-label="Page sections"><a href="#dataset">Dataset</a><a href="#method">Method</a><a href="#results">Results</a><a href="#generalization">Generalization</a></nav>
+  </header>
+
+  <main id="main">
+    <section class="section wrap" id="video">
+      <div class="section-heading"><h2>Technical Video</h2></div>
+      <video width="1920" height="1080" class="technical-video" controls playsinline preload="metadata" poster="assets/video-poster.jpg" aria-label="Technical video with English narration and embedded captions"><source src="assets/technical-video.mp4" type="video/mp4">Your browser does not support HTML video.</video>
+    </section>
+
+    <section class="section abstract-section" id="abstract">
+      <div class="reading"><h2>Abstract</h2>
+        <p id="paper-abstract">Safe indoor operation requires autonomous tracking of objects that are not directly visible to the robot. Optical non-line-of-sight (NLoS) methods depend on ambient lighting and scene geometry or on weak multi-bounce returns that need long acquisitions. Millimeter-wave (mmWave) radar offers an attractive alternative: walls act as reflectors for mmWave signals, and frequency-modulated continuous-wave (FMCW) radars enable fast, practical measurement of range, angle, and velocity. However, the low resolution of these radars leads to spatially ambiguous observations. The Doppler information, although particularly sensitive to target motion, remains underexplored in indoor NLoS localization: existing methods emphasize spatial representations and either collapse or discard the Doppler dimension before learning. To leverage the complete Range–Azimuth–Doppler (RAD) information, we acquire the first indoor NLoS radar dataset that pairs sequential RAD measurements with synchronized position and velocity ground truth under controlled variations in motion: 576 sequences totaling 720,856 frames across 12 trajectories of a mobile robot moving along varying speeds, starting positions, and material configurations. We then formulate NLoS tracking as sequential position-velocity estimation rather than frame-wise localization: a shared 3-D encoder processes the full RAD representation of consecutive frames, separate recurrent branches estimate position and velocity, and post-inference refinement combines the two into a motion-consistent trajectory. Our method achieves 8.95 cm position and 1.75 cm/s velocity errors on held-out trajectories and generalizes to unseen scenarios involving a moving human target. Together, our dataset and tracker establish a benchmark for tracking hidden moving targets with a low-cost radar.</p>
+      </div>
+    </section>
+
+    <section class="section wrap" id="dataset">
+      <div class="section-heading"><h2>Dataset</h2></div>
+      <div class="section-copy">
+        <p>We collect <strong>576 sequences</strong> comprising <strong>720,856 synchronized radar frames</strong>, pairing full RAD measurements with position and velocity ground truth. The dataset covers 12 trajectories, three nominal speeds (0.25, 0.75, and 1.0 m/s), four starting positions, and four target configurations.</p>
+        <p>The radar faces a relay wall, while the target moves outside its direct field of view. All recordings use wall-reflected signals.</p>
+      </div>
+      <div class="chapter-player dataset-animation">
+        <video width="1664" height="784" id="dataset-video" autoplay loop muted playsinline preload="auto" poster="assets/dataset-poster.jpg" aria-label="Dataset demonstration showing three speeds, four target configurations, twelve trajectories, and four starting positions appearing in sequence"><source src="assets/dataset.mp4" type="video/mp4">Your browser does not support HTML video.</video>
+        <div class="video-chapters" aria-label="Dataset video chapters">
+          <button type="button" data-time="0"><span>01</span> 3 speeds</button>
+          <button type="button" data-time="6.041667"><span>02</span> 4 target configurations</button>
+          <button type="button" data-time="10.875"><span>03</span> 12 trajectories</button>
+          <button type="button" data-time="14.666667"><span>04</span> 4 starting positions</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="method">
+      <div class="section-heading"><h2>Method</h2></div>
+      <figure>
+        <button class="figure-button" type="button" data-figure="assets/pipeline.png" data-caption="The tracking pipeline: a shared 3-D encoder, independent recurrent branches for position and velocity, and motion-consistent refinement." aria-label="Enlarge the method diagram"><img width="2841" height="828" src="assets/pipeline.png" alt="Method pipeline with full RAD inputs, a shared 3D residual CNN, separate temporal position and velocity estimation, and a motion-consistent refinement stage." loading="lazy"><span class="enlarge">↗ Expand figure</span></button>
+      </figure>
+      <div class="section-copy">
+        <p>We formulate NLoS tracking as sequential position–velocity estimation from full RAD measurements. The framework consists of three stages:</p>
+        <ol class="method-description">
+          <li>A shared 3-D residual CNN extracts features from each RAD frame, preserving range, azimuth, and Doppler information.</li>
+          <li>Separate recurrent branches estimate position and velocity from the same feature sequence. Each branch combines a frame-level prediction with a learned temporal correction.</li>
+          <li>Post-inference refinement combines predicted positions with velocity-based motion constraints to produce a motion-consistent trajectory and reduce stationary jitter and drift.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section wrap" id="results">
+      <div class="section-heading"><h2>Tracking Results</h2><p>Evaluation on 48 held-out recordings of N-shaped trajectories, after training on 528 sequences.</p></div>
+      <div class="metrics">
+        <div><strong>8.95 <span>cm</span></strong><span>Mean position error</span></div>
+        <div><strong>1.75 <span>cm/s</span></strong><span>Mean velocity error</span></div>
+      </div>
+      <p class="reading result-insight">Motion-consistent refinement reduces position error from 15.59 to 8.95 cm and velocity error from 2.01 to 1.75 cm/s, improving temporal consistency and suppressing drift.</p>
+      <figure class="result-figure">
+        <button class="figure-button" type="button" data-figure="assets/qualitative-results.png" data-caption="Selected qualitative tracking results. Within each pair, ground truth is on the left and the refined prediction is on the right. Color encodes velocity direction and magnitude." aria-label="Enlarge the qualitative tracking results"><img width="2148" height="945" src="assets/qualitative-results.png" alt="Six pairs of ground-truth and predicted trajectories with velocity shown by color, illustrating tracking over different path shapes." loading="lazy"><span class="enlarge">↗ Expand figure</span></button>
+        <figcaption><strong>Selected qualitative examples.</strong> Ground truth (left) and refined prediction (right) for each trajectory. Color represents velocity direction and magnitude. These examples span additional trajectory shapes; the numerical errors above refer specifically to the held-out N-shaped recordings.</figcaption>
+      </figure>
+      <details class="additional-results">
+        <summary>Explore errors across trajectories and target configurations <span aria-hidden="true">+</span></summary>
+        <figure>
+          <button class="figure-button" type="button" data-figure="assets/error-heatmaps.png" data-caption="Component-wise mean absolute errors across the 12 trajectory shapes and four target configurations, averaged over three speeds and four starting positions." aria-label="Enlarge the error heatmaps"><img width="2100" height="734" src="assets/error-heatmaps.png" alt="Heatmaps of component-wise position and velocity mean absolute errors across twelve trajectories and four target configurations." loading="lazy"><span class="enlarge">↗ Expand figure</span></button>
+          <figcaption>Component-wise MAE across all 12 trajectory shapes and four target configurations, averaged over the three speeds and four starting positions. This breakdown is distinct from the held-out mean Euclidean errors reported above.</figcaption>
+        </figure>
+      </details>
+    </section>
+
+    <section class="section generalization-section" id="generalization">
+      <div class="wrap chapter-player">
+        <div class="section-heading"><h2>Qualitative Results for Generalization</h2><p>A model trained on robot motion is evaluated on an unseen human target following new trajectories.</p></div>
+        <video width="1664" height="784" id="generalization-video" autoplay loop muted playsinline preload="auto" poster="assets/generalization-poster.jpg" aria-label="Sequential demonstration of robot training data, human experiments, and ground-truth and predicted human trajectories"><source src="assets/generalization.mp4" type="video/mp4">Your browser does not support video. <a href="assets/generalization.mp4">Download the generalization video</a>.</video>
+        <div class="video-chapters" aria-label="Generalization video chapters">
+          <button type="button" data-time="0"><span>01</span> Trained on robot data</button>
+          <button type="button" data-time="6.375"><span>02</span> Human experiments</button>
+          <button type="button" data-time="10.667"><span>03</span> Ground truth &amp; prediction</button>
+        </div>
+        <p class="reading">The predicted human trajectories follow the overall ground-truth paths, with velocity patterns that qualitatively agree with the measurements. These examples illustrate transfer from robot training data to human motion.</p>
+      </div>
+    </section>
+
+  </main>
+  <footer class="wrap"><span>Doppler-aided NLoS Tracking</span><a href="#">Back to top ↑</a></footer>
+  <dialog id="figure-dialog" aria-label="Expanded research figure">
+    <button class="dialog-close" type="button" aria-label="Close expanded figure">✕</button>
+    <figure><img id="expanded-image" alt=""><figcaption id="expanded-caption"></figcaption></figure>
+  </dialog>
+</body>
+</html>
