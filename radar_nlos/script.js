@@ -1,5 +1,13 @@
 'use strict';
 
+const bibtexToggle = document.querySelector('#bibtex-toggle');
+const bibtexPanel = document.querySelector('#bibtex-panel');
+bibtexToggle.addEventListener('click', () => {
+  const expanded = bibtexToggle.getAttribute('aria-expanded') === 'true';
+  bibtexToggle.setAttribute('aria-expanded', String(!expanded));
+  bibtexPanel.hidden = expanded;
+});
+
 const dialog = document.querySelector('#figure-dialog');
 const expandedImage = document.querySelector('#expanded-image');
 const expandedCaption = document.querySelector('#expanded-caption');

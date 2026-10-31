@@ -6,6 +6,11 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 /* Plain research-page layout. */
+.bibtex-panel{max-width:940px;margin:20px auto 0;text-align:left}
+.bibtex-panel pre{margin:0;padding:20px;border:1px solid var(--line);border-radius:6px;background:var(--soft);font:13px/1.7 Consolas,Monaco,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.bibtex-panel code{font:inherit}
+#bibtex-toggle{cursor:pointer}
+#bibtex-toggle[aria-expanded="true"]{background:var(--soft)}
 .abstract-section,.generalization-section{background:#fff;border:0}
 .section-copy{max-width:940px;margin:0 auto;font-size:16px;line-height:1.85}
 .section-copy p+p{margin-top:14px}

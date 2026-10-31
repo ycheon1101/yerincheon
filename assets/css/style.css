@@ -1468,8 +1468,8 @@ main {
   color: var(--orange-yellow-crayola);
 }
 .publication-figure--radar img {
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: left center;
 }
 
 
