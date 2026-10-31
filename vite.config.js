@@ -2,10 +2,10 @@ import { defineConfig } from "vite";
 import { cpSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-// GitHub Pages serves the source at /yerincheon/. If deploying Vite build output,
-// build with `vite build --base=/yerincheon/` instead of the default root base.
+// Match GitHub Pages and the document base for local previews and build output.
 export default defineConfig({
   root: ".",
+  base: "/yerincheon/",
   server: {
     open: true,
     port: 5173,

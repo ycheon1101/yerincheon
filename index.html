@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/yerincheon/">
   <title>YerinCheon's web</title>
   <meta name="description" content="Yerin Cheon - Graduate Student Researcher. Computer vision, multimodal perception, and robotics at Stony Brook University.">
   <link rel="canonical" href="https://ycheon1101.github.io/yerincheon/">
@@ -31,7 +32,7 @@
   <!--
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css?v=20261030-about">
+  <link rel="stylesheet" href="./assets/css/style.css?v=20261031-project-links">
 
   <!--
     - google font link
@@ -1112,7 +1113,7 @@
           <ul class="blog-posts-list">
 
             <li class="blog-post-item">
-              <a href="#" data-open-project-pdf="./assets/pdf/LiDAR_UDA_SS.pdf">
+              <a href="./projects/lidar-uda" data-project-slug="lidar-uda" data-open-project-pdf="./assets/pdf/LiDAR_UDA_SS.pdf">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/project-lidar-uda.png" alt="LiDAR UDA figure" loading="lazy">
@@ -1140,7 +1141,7 @@
             </li>
 
             <li class="blog-post-item">
-              <a href="#" data-open-project-pdf="./assets/pdf/Colmap_Free_3DGS.pdf">
+              <a href="./projects/colmap-free-3dgs" data-project-slug="colmap-free-3dgs" data-open-project-pdf="./assets/pdf/Colmap_Free_3DGS.pdf">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/project-3d-vision.png" alt="COLMAP-Free 3DGS and Depth Map Analysis figure" loading="lazy">
@@ -1168,7 +1169,7 @@
             </li>
 
             <li class="blog-post-item">
-              <a href="#" data-open-project-pdf="./assets/pdf/Graphcut_Based_Post_Processing.pdf">
+              <a href="./projects/graphcut-segmentation" data-project-slug="graphcut-segmentation" data-open-project-pdf="./assets/pdf/Graphcut_Based_Post_Processing.pdf">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/project-graphcut.png" alt="Graphcut-based segmentation refinement figure" loading="lazy">
@@ -1196,7 +1197,7 @@
             </li>
 
             <li class="blog-post-item">
-              <a href="#" data-open-project-pdf="./assets/pdf/Visual_Question_Answering.pdf">
+              <a href="./projects/visual-question-answering" data-project-slug="visual-question-answering" data-open-project-pdf="./assets/pdf/Visual_Question_Answering.pdf">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/project-vqa.png" alt="Visual question answering pipeline figure" loading="lazy">
@@ -1224,7 +1225,7 @@
             </li>
 
             <li class="blog-post-item">
-              <a href="#" data-open-project-pdf="./assets/pdf/Evaluating_Optimization_Algorithms.pdf">
+              <a href="./projects/ml-optimization" data-project-slug="ml-optimization" data-open-project-pdf="./assets/pdf/Evaluating_Optimization_Algorithms.pdf">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/project-ml-opt.png" alt="ML optimization comparison figure" loading="lazy">
@@ -1252,7 +1253,7 @@
             </li>
 
             <li class="blog-post-item">
-              <a href="#" data-open-project-pdf="./assets/pdf/Multi_GPU_Training_from_Scratch.pdf">
+              <a href="./projects/multi-gpu-training" data-project-slug="multi-gpu-training" data-open-project-pdf="./assets/pdf/Multi_GPU_Training_from_Scratch.pdf">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/project-ddp.png" alt="Multi-GPU training from scratch figure" loading="lazy">
@@ -1292,11 +1293,12 @@
             <ion-icon name="arrow-back-outline"></ion-icon>
             <span>Back to Projects</span>
           </button>
-          <h2 class="h2 article-title">Project PDF</h2>
+          <h2 class="h2 article-title" data-project-title>Project</h2>
         </header>
 
         <section class="project-pdf-section">
-          <iframe class="project-pdf-frame" src="" title="Project PDF" data-project-pdf-frame></iframe>
+          <a class="project-pdf-link" href="./projects" target="_blank" rel="noopener noreferrer" data-project-pdf-link>Open PDF in a new tab ↗</a>
+          <iframe class="project-pdf-frame" title="Project PDF" data-project-pdf-frame></iframe>
         </section>
 
       </article>
@@ -1362,7 +1364,7 @@
   <!--
     - custom js link
   -->
-  <script type="module" src="./assets/js/script.js?v=20261030-all-news"></script>
+  <script type="module" src="./assets/js/script.js?v=20261031-project-links"></script>
 
   <!--
     - ionicon link

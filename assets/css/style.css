@@ -1952,10 +1952,12 @@ main {
 
 .project-detail-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
+
+.project-detail-header .article-title { font-size: clamp(20px, 3vw, 28px); text-transform: none; }
 
 .project-back-btn {
   display: inline-flex;
@@ -1970,6 +1972,9 @@ main {
 .project-pdf-section {
   margin-top: 14px;
 }
+
+.project-pdf-link { display: inline-block; margin-bottom: 12px; color: var(--orange-yellow-crayola); font-size: var(--fs-7); }
+.project-pdf-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .project-pdf-frame {
   width: 100%;

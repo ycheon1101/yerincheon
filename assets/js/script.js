@@ -417,8 +417,18 @@ const PAGE_KEYS = new Set([
   "ongoing",
   "projects",
   "contact",
-  "project-detail",
 ]);
+const appBase = new URL(document.baseURI).pathname;
+const defaultPageTitle = document.title;
+const projectPdfTriggers = document.querySelectorAll("[data-project-slug]");
+let projectPdfFrame = document.querySelector("[data-project-pdf-frame]");
+const projectTitle = document.querySelector("[data-project-title]");
+const projectPdfLink = document.querySelector("[data-project-pdf-link]");
+const projectBackBtn = document.querySelector("[data-project-back-btn]");
+const projectsBySlug = new Map([...projectPdfTriggers].map(anchor => [anchor.dataset.projectSlug, {
+  title: anchor.querySelector(".blog-item-title").textContent.trim(),
+  pdfUrl: new URL(anchor.dataset.openProjectPdf, document.baseURI).href,
+}]));
 
 function normalizePathname() {
   let p = window.location.pathname;
@@ -428,36 +438,28 @@ function normalizePathname() {
   return p.replace(/\/$/, "") || "/";
 }
 
-function computeAppBase() {
+function getRouteFromPath() {
   const pathname = normalizePathname();
-  const segments = pathname.split("/").filter(Boolean);
-  if (segments.length && PAGE_KEYS.has(segments[segments.length - 1])) {
-    segments.pop();
+  const routePath = pathname.startsWith(appBase) ? pathname.slice(appBase.length) : "";
+  const segments = routePath.split("/").filter(Boolean);
+  if (segments[0] === "projects" && segments.length > 1) {
+    const projectSlug = segments[1];
+    return segments.length === 2 && projectsBySlug.has(projectSlug)
+      ? { page: "project-detail", projectSlug }
+      : { page: "projects", redirect: true };
   }
-  if (segments.length === 0) return "/";
-  return "/" + segments.join("/") + "/";
+  // The old shared URL has no project identity; show the list instead of a blank PDF.
+  if (segments[0] === "project-detail") return { page: "projects", redirect: true };
+  if (segments.length === 1 && PAGE_KEYS.has(segments[0])) {
+    return { page: segments[0], redirect: segments[0] === "about" };
+  }
+  return { page: "about" };
 }
 
-const appBase = computeAppBase();
-
-function getPageFromPath() {
-  const pathname = normalizePathname();
-  const segments = pathname.split("/").filter(Boolean);
-  if (segments.length && PAGE_KEYS.has(segments[segments.length - 1])) {
-    return segments[segments.length - 1];
-  }
-  return "about";
-}
-
-function buildPageUrl(pageKey) {
-  if (pageKey === "about") {
-    if (appBase === "/") return "/";
-    return appBase.replace(/\/$/, "") || "/";
-  }
-  if (appBase === "/") {
-    return "/" + pageKey;
-  }
-  return appBase.replace(/\/$/, "") + "/" + pageKey;
+function buildPageUrl(pageKey, projectSlug) {
+  if (pageKey === "about") return appBase;
+  if (pageKey === "project-detail") return `${appBase}projects/${projectSlug}`;
+  return appBase + pageKey;
 }
 
 function setActivePage(pageKey) {
@@ -465,7 +467,7 @@ function setActivePage(pageKey) {
     pages[i].classList.toggle("active", pages[i].dataset.page === pageKey);
   }
   for (let i = 0; i < navigationLinks.length; i++) {
-    const label = navigationLinks[i].innerHTML.toLowerCase();
+    const label = navigationLinks[i].textContent.trim().toLowerCase();
     const navMatch =
       pageKey === "project-detail" ? label === "projects" : label === pageKey;
     navigationLinks[i].classList.toggle("active", navMatch);
@@ -473,41 +475,54 @@ function setActivePage(pageKey) {
   window.scrollTo(0, 0);
 }
 
-function showPage(pageKey, options) {
-  const replace = options && options.replace;
-  const skipHistory = options && options.skipHistory;
+function showPage(pageKey, options = {}) {
+  const { replace, skipHistory, projectSlug } = options;
+  const project = pageKey === "project-detail" && projectsBySlug.get(projectSlug);
+  if (pageKey === "project-detail" && !project) pageKey = "projects";
+  if (project) {
+    projectTitle.textContent = project.title;
+    if (projectPdfFrame.src !== project.pdfUrl) {
+      // A fresh frame keeps PDF navigations out of the browser's page history.
+      const nextFrame = projectPdfFrame.cloneNode(false);
+      nextFrame.title = `${project.title} — PDF`;
+      nextFrame.src = project.pdfUrl;
+      projectPdfFrame.replaceWith(nextFrame);
+      projectPdfFrame = nextFrame;
+    }
+    projectPdfLink.href = project.pdfUrl;
+  }
+  document.title = project ? `${project.title} | ${defaultPageTitle}` : defaultPageTitle;
   setActivePage(pageKey);
   if (skipHistory) return;
-  const url = buildPageUrl(pageKey);
+  const url = buildPageUrl(pageKey, projectSlug);
+  const state = { page: pageKey, projectSlug };
   if (replace) {
-    history.replaceState({ page: pageKey }, "", url);
+    history.replaceState(state, "", url);
   } else {
-    history.pushState({ page: pageKey }, "", url);
+    history.pushState(state, "", url);
   }
 }
 
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
-    const pageKey = this.innerHTML.toLowerCase();
+    const pageKey = this.textContent.trim().toLowerCase();
     showPage(pageKey);
   });
 }
 
-window.addEventListener("popstate", function () {
-  showPage(getPageFromPath(), { skipHistory: true });
-});
+function restorePageFromLocation() {
+  const route = getRouteFromPath();
+  showPage(route.page, { projectSlug: route.projectSlug, skipHistory: !route.redirect, replace: true });
+}
 
-// project pdf view variables
-const projectPdfTriggers = document.querySelectorAll("[data-open-project-pdf]");
-const projectPdfFrame = document.querySelector("[data-project-pdf-frame]");
-const projectBackBtn = document.querySelector("[data-project-back-btn]");
+window.addEventListener("popstate", restorePageFromLocation);
 
 for (let i = 0; i < projectPdfTriggers.length; i++) {
   projectPdfTriggers[i].addEventListener("click", function (event) {
+    // Keep native copy-link, modifier-click, and new-tab behavior.
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    const pdfSrc = this.getAttribute("data-open-project-pdf");
-    if (projectPdfFrame) projectPdfFrame.src = pdfSrc;
-    showPage("project-detail");
+    showPage("project-detail", { projectSlug: this.dataset.projectSlug });
   });
 }
 
@@ -517,18 +532,10 @@ if (projectBackBtn) {
   });
 }
 
-document.querySelectorAll('[data-page="publications"] .blog-post-item > a[href="#"]').forEach(function (anchor) {
+document.querySelectorAll('[data-page="publications"] a[href="#"], [data-page="ongoing"] a[href="#"]').forEach(function (anchor) {
   anchor.addEventListener("click", function (event) {
     event.preventDefault();
   });
 });
 
-const initialPage = getPageFromPath();
-showPage(initialPage, { skipHistory: true });
-
-if (initialPage === "about") {
-  const segments = normalizePathname().split("/").filter(Boolean);
-  if (segments.length && segments[segments.length - 1] === "about") {
-    history.replaceState({ page: "about" }, "", buildPageUrl("about"));
-  }
-}
+restorePageFromLocation();
