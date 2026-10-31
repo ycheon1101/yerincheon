@@ -585,6 +585,17 @@ main {
 
 .about-text p { margin-bottom: 15px; }
 
+.about-text strong { font-weight: var(--fw-600); }
+
+.about-text a {
+  display: inline;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-text a:hover { color: var(--orange-yellow-crayola); }
+
 
 
 /**
