@@ -31,7 +31,7 @@
   <!--
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css?v=20261030-news-carousel">
+  <link rel="stylesheet" href="./assets/css/style.css?v=20261030-all-news">
 
   <!--
     - google font link
@@ -367,7 +367,6 @@
             <h3 class="h3 testimonials-title">News</h3>
 
             <div class="news-tools">
-            <button class="news-motion-btn" type="button" data-news-motion-toggle aria-pressed="false" aria-label="Pause News animations">Pause motion</button>
             <button class="news-more-btn" type="button" data-news-more-btn aria-label="View all news" title="View all news">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
             </button>
@@ -380,7 +379,7 @@
             </button>
           <ul class="testimonials-list has-scrollbar news-list" id="news-slides" tabindex="0" aria-label="News updates">
 
-            <li class="testimonials-item news-item is-current" aria-roledescription="slide" aria-label="1 of 2">
+            <li class="testimonials-item news-item is-current" data-news-key="nlos-preprint" aria-roledescription="slide">
               <div class="content-card" data-testimonials-item>
                 <figure class="news-logo-hidden">
                   <img src="./radar_nlos/assets/favicon.svg" alt="NLoS radar tracking" width="60" data-testimonials-avatar>
@@ -404,7 +403,6 @@
                     <path d="m260 145 10 10m0-10-10 10" stroke="#f08585" stroke-width="2" opacity=".8"/>
                     <rect x="280" y="95" width="19" height="91" rx="4" fill="#484b55"/>
                     <rect x="280" y="95" width="19" height="91" rx="4" fill="url(#nlos-wall-hatch)"/>
-                    <text x="290" y="204" class="nlos-label" text-anchor="middle">OCCLUDER</text>
                     <path d="M418 150h90" stroke="#7ae4d0" stroke-width="2" stroke-dasharray="2 8" opacity=".35"/>
                     <path d="M80 150 255 43 430 150" fill="none" stroke="#f2cc6a" stroke-width="2" opacity=".35">
                       <animate attributeName="d" values="M80 150 255 43 430 150;M80 150 285 43 490 150;M80 150 255 43 430 150" dur="7s" repeatCount="indefinite"/>
@@ -458,7 +456,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item news-item" aria-roledescription="slide" aria-label="2 of 2">
+            <li class="testimonials-item news-item" data-news-key="icpr-2026" aria-roledescription="slide">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="news-logo-hidden">
@@ -483,7 +481,7 @@
 
                 <div class="testimonials-text" data-testimonials-text>
                   <p>
-                    Our paper "Dual-Foundation Models for Unsupervised Domain Adaptation" has been accepted at ICPR 2026.
+                    Our paper "<a class="news-paper-link" href="https://github.com/ycheon1101/DFUDA" target="_blank" rel="noopener noreferrer">Dual-Foundation Models for Unsupervised Domain Adaptation</a>" has been accepted at ICPR 2026.
                   </p>
                 </div>
                 <div class="news-extra-hidden" data-testimonials-extra>
@@ -498,7 +496,7 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
             </button>
           </div>
-          <p class="news-carousel-status" data-news-status role="status" aria-live="polite" aria-atomic="true">1 / 2</p>
+          <p class="news-carousel-status" data-news-status role="status" aria-live="polite" aria-atomic="true"></p>
 
         </section>
 
@@ -539,7 +537,7 @@
                     <img src="./assets/images/icon-quote.svg" class="modal-quote-inline" alt="quote icon">
                     <div data-modal-text>
                       <p>
-                        Our paper "Dual-Foundation Models for Unsupervised Domain Adaptation" has been accepted at ICPR 2026.<img src="./assets/images/icon-quote.svg" class="modal-quote-end-inline" alt="" aria-hidden="true">
+                        Our paper "<a class="news-paper-link" href="https://github.com/ycheon1101/DFUDA" target="_blank" rel="noopener noreferrer">Dual-Foundation Models for Unsupervised Domain Adaptation</a>" has been accepted at ICPR 2026.<img src="./assets/images/icon-quote.svg" class="modal-quote-end-inline" alt="" aria-hidden="true">
                       </p>
                     </div>
                   </div>
@@ -550,7 +548,7 @@
               <!-- News selector -->
               <aside class="news-modal-side">
                 <ul class="news-modal-list">
-                  <li class="news-modal-item" data-testimonials-item>
+                  <li class="news-modal-item" data-testimonials-item data-news-key="nlos-preprint">
                     <div class="news-modal-row">
                       <img src="./radar_nlos/assets/favicon.svg" alt="NLoS radar tracking" data-testimonials-avatar>
                       <div class="news-modal-text">
@@ -564,7 +562,7 @@
                     </div>
                     <button class="news-open-btn" type="button" data-news-open-detail aria-label="Read NLoS tracking preprint news"><ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
                   </li>
-                  <li class="news-modal-item" data-testimonials-item>
+                  <li class="news-modal-item" data-testimonials-item data-news-key="icpr-2026">
                     <div class="news-modal-row">
                       <img src="./assets/images/news-icpr2026.png" alt="ICPR 2026 logo" data-testimonials-avatar>
                       <div class="news-modal-text">
@@ -573,7 +571,7 @@
                       </div>
                     </div>
                     <div data-testimonials-text>
-                      <p>Our paper "Dual-Foundation Models for Unsupervised Domain Adaptation" has been accepted at ICPR 2026.</p>
+                      <p>Our paper "<a class="news-paper-link" href="https://github.com/ycheon1101/DFUDA" target="_blank" rel="noopener noreferrer">Dual-Foundation Models for Unsupervised Domain Adaptation</a>" has been accepted at ICPR 2026.</p>
                     </div>
                     <div class="news-extra-hidden" data-testimonials-extra>
                       <p class="news-thanks-line"><ion-icon name="add-outline" aria-hidden="true"></ion-icon>I am deeply grateful for the guidance and support I received from Prof. Francois Rameau and Prof. Aruna Balasubramanian throughout this two-year journey.</p>
@@ -762,7 +760,7 @@
               </figure>
 
               <div class="publication-content">
-                <h4 class="h4 publication-title">Dual-Foundation Models for Unsupervised Domain Adaptation</h4>
+                <h4 class="h4 publication-title"><a class="publication-project-link" href="https://github.com/ycheon1101/DFUDA" target="_blank" rel="noopener noreferrer">Dual-Foundation Models for Unsupervised Domain Adaptation</a></h4>
                 <p class="publication-venue">International Conference on Pattern Recognition (ICPR 2026)</p>
                 <p class="publication-authors">Yerin Cheon, Aruna Balasubramanian, and Francois Rameau</p>
                 <time datetime="2026-08-17">Aug 17, 2026</time>
@@ -812,7 +810,7 @@
             </li>
 
             <li class="blog-post-item">
-              <a href="#">
+              <a href="https://github.com/ycheon1101/DFUDA" target="_blank" rel="noopener noreferrer">
 
                 <figure class="blog-banner-box">
                   <img src="./assets/images/publication-figure.png" alt="Pipeline figure from Dual-Foundation Models paper" loading="lazy">
@@ -1358,7 +1356,7 @@
   <!--
     - custom js link
   -->
-  <script type="module" src="./assets/js/script.js?v=20261030-news-carousel"></script>
+  <script type="module" src="./assets/js/script.js?v=20261030-all-news"></script>
 
   <!--
     - ionicon link

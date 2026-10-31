@@ -116,7 +116,7 @@ for (let i = 0; i < newsOpenBtns.length; i++) {
 for (let i = 0; i < newsModalItems.length; i++) {
   newsModalItems[i].addEventListener("click", function (event) {
     // Keep button click behavior, but allow full-card click too.
-    if (event.target.closest("[data-news-open-detail]")) { return; }
+    if (event.target.closest("a, [data-news-open-detail]")) { return; }
     openTestimonialsModalFrom(this);
     setNewsDetailMode(true);
   });
@@ -132,36 +132,67 @@ if (newsBackBtn) {
 modalCloseBtn.addEventListener("click", testimonialsModalClose);
 overlay.addEventListener("click", testimonialsModalClose);
 
-// Featured news: arrows, keyboard navigation, and native touch scrolling.
+// All news: reuse archive content, keeping the two illustrated announcements.
 const newsCarousel = document.querySelector("[data-news-carousel]");
 if (newsCarousel) {
   const newsList = newsCarousel.querySelector(".news-list");
+  const illustratedSlides = new Map([...newsList.querySelectorAll("[data-news-key]")].map(slide => [slide.dataset.newsKey, slide]));
+  newsModalItems.forEach(item => {
+    const illustrated = illustratedSlides.get(item.dataset.newsKey);
+    if (illustrated) {
+      newsList.append(illustrated);
+      return;
+    }
+
+    const slide = document.createElement("li");
+    slide.className = "testimonials-item news-item";
+    slide.setAttribute("aria-roledescription", "slide");
+    const card = document.createElement("div");
+    card.className = "content-card";
+    const scene = document.createElement("div");
+    scene.className = "news-scene news-scene--archive";
+    const date = item.querySelector("[data-testimonials-date]").cloneNode(true);
+    date.className = "news-scene-date";
+    date.insertAdjacentHTML("afterbegin", '<ion-icon class="news-scene-date-icon" name="alarm-outline" aria-hidden="true"></ion-icon>');
+    const picture = item.querySelector("[data-testimonials-avatar]").cloneNode(true);
+    picture.className = "news-archive-image";
+    picture.loading = "lazy";
+    picture.decoding = "async";
+    const title = item.querySelector("[data-testimonials-title]").cloneNode(true);
+    title.className = "h4 testimonials-item-title";
+    const body = item.querySelector("[data-testimonials-text]").cloneNode(true);
+    body.className = "testimonials-text";
+    scene.append(date, picture);
+    card.append(scene, title, body);
+    slide.append(card);
+    newsList.append(slide);
+  });
   const newsSlides = [...newsList.querySelectorAll(".news-item")];
+  newsSlides.forEach((slide, index) => slide.setAttribute("aria-label", `${index + 1} of ${newsSlides.length}`));
   const newsStatus = document.querySelector("[data-news-status]");
-  const motionButton = document.querySelector("[data-news-motion-toggle]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let currentNews = 0;
-  let userPausedMotion = false;
   let carouselVisible = true;
+  let newsWidth = 0;
   let scrollTimer;
 
   const updateNewsMotion = () => {
-    const paused = userPausedMotion || reducedMotion.matches;
-    newsCarousel.dataset.motionPaused = String(paused || !carouselVisible);
-    motionButton.disabled = reducedMotion.matches;
-    motionButton.setAttribute("aria-pressed", String(paused));
-    motionButton.textContent = reducedMotion.matches ? "Reduced motion" : paused ? "Resume motion" : "Pause motion";
-    motionButton.setAttribute("aria-label", reducedMotion.matches ? "News animations follow your reduced motion preference" : paused ? "Resume News animations" : "Pause News animations");
+    newsCarousel.dataset.motionPaused = String(!carouselVisible);
     newsSlides.forEach((slide, index) => {
       slide.querySelectorAll("[data-news-animation]").forEach(svg => {
-        if (paused || !carouselVisible || index !== currentNews) {
+        if (!carouselVisible || index !== currentNews) {
           svg.pauseAnimations();
-          if (reducedMotion.matches) svg.setCurrentTime(1.75);
         } else {
           svg.unpauseAnimations();
         }
       });
     });
+  };
+
+  const fitNewsHeight = () => {
+    if (!newsList.clientWidth) return;
+    const style = getComputedStyle(newsList);
+    newsList.style.height = `${newsSlides[currentNews].offsetHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)}px`;
   };
 
   const setCurrentNews = index => {
@@ -174,6 +205,7 @@ if (newsCarousel) {
       slide.setAttribute("aria-hidden", String(!active));
     });
     newsStatus.textContent = `${currentNews + 1} / ${newsSlides.length}`;
+    fitNewsHeight();
     updateNewsMotion();
   };
 
@@ -204,17 +236,22 @@ if (newsCarousel) {
     }, 150);
   }, { passive: true });
   new ResizeObserver(() => {
-    if (newsList.clientWidth) newsList.scrollTo({ left: slideLeft(currentNews), behavior: "instant" });
+    if (!newsList.clientWidth) {
+      newsWidth = 0;
+      return;
+    }
+    if (newsList.clientWidth && newsList.clientWidth !== newsWidth) {
+      newsWidth = newsList.clientWidth;
+      newsList.scrollTo({ left: slideLeft(currentNews), behavior: "instant" });
+      fitNewsHeight();
+    }
   }).observe(newsList);
+  const cardResizeObserver = new ResizeObserver(fitNewsHeight);
+  newsSlides.forEach(slide => cardResizeObserver.observe(slide.querySelector(".content-card")));
   new IntersectionObserver(entries => {
     carouselVisible = entries[0].isIntersecting;
     updateNewsMotion();
   }).observe(newsCarousel);
-  motionButton.addEventListener("click", () => {
-    userPausedMotion = !userPausedMotion;
-    updateNewsMotion();
-  });
-  reducedMotion.addEventListener("change", updateNewsMotion);
   setCurrentNews(0);
 }
 
