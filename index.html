@@ -31,7 +31,7 @@
   <!--
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css?v=20261030-home-publication-full-image">
+  <link rel="stylesheet" href="./assets/css/style.css?v=20261030-news-carousel">
 
   <!--
     - google font link
@@ -366,22 +366,99 @@
           <div class="testimonials-top">
             <h3 class="h3 testimonials-title">News</h3>
 
-            <button class="news-more-btn" type="button" data-news-more-btn>
-              <img
-                src="https://img.icons8.com/?size=100&id=39777&format=png&color=FFEB3B"
-                alt=""
-                width="18"
-                height="18"
-                loading="lazy"
-                decoding="async"
-                aria-hidden="true"
-              />
+            <div class="news-tools">
+            <button class="news-motion-btn" type="button" data-news-motion-toggle aria-pressed="false" aria-label="Pause News animations">Pause motion</button>
+            <button class="news-more-btn" type="button" data-news-more-btn aria-label="View all news" title="View all news">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
             </button>
+            </div>
           </div>
 
-          <ul class="testimonials-list has-scrollbar news-list">
+          <div class="news-carousel" data-news-carousel role="region" aria-roledescription="carousel" aria-label="Latest news">
+            <button class="news-nav-btn" type="button" data-news-prev aria-label="Previous news" aria-controls="news-slides">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+            </button>
+          <ul class="testimonials-list has-scrollbar news-list" id="news-slides" tabindex="0" aria-label="News updates">
 
-            <li class="testimonials-item news-item">
+            <li class="testimonials-item news-item is-current" aria-roledescription="slide" aria-label="1 of 2">
+              <div class="content-card" data-testimonials-item>
+                <figure class="news-logo-hidden">
+                  <img src="./radar_nlos/assets/favicon.svg" alt="NLoS radar tracking" width="60" data-testimonials-avatar>
+                </figure>
+                <div class="news-scene news-scene--nlos">
+                  <time class="news-scene-date" datetime="2026-10-25" data-testimonials-date>
+                    <ion-icon class="news-scene-date-icon" name="alarm-outline" aria-hidden="true"></ion-icon>
+                    Oct 25, 2026
+                  </time>
+                  <svg class="nlos-scene" data-news-animation viewBox="0 0 600 220" role="img" aria-labelledby="nlos-scene-title">
+                    <title id="nlos-scene-title">A mmWave radar tracks the position and velocity of a hidden robot using signals reflected off a wall, around an occluder.</title>
+                    <defs>
+                      <pattern id="nlos-wall-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0v8" stroke="#737987" stroke-width="2"/></pattern>
+                      <marker id="nlos-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="m0 0 10 5-10 5Z" fill="#7ae4d0"/></marker>
+                    </defs>
+                    <rect x="14" y="8" width="572" height="204" rx="18" fill="#ffffff" fill-opacity=".025"/>
+                    <text x="300" y="23" class="nlos-label" text-anchor="middle">WALL REFLECTION</text>
+                    <rect x="120" y="32" width="396" height="10" rx="4" fill="#74736b"/>
+                    <path d="M124 43h388" stroke="#f2cc6a" stroke-width="3"/>
+                    <path d="M96 150h184" stroke="#f08585" stroke-width="1.5" stroke-dasharray="4 7" opacity=".35"/>
+                    <path d="m260 145 10 10m0-10-10 10" stroke="#f08585" stroke-width="2" opacity=".8"/>
+                    <rect x="280" y="95" width="19" height="91" rx="4" fill="#484b55"/>
+                    <rect x="280" y="95" width="19" height="91" rx="4" fill="url(#nlos-wall-hatch)"/>
+                    <text x="290" y="204" class="nlos-label" text-anchor="middle">OCCLUDER</text>
+                    <path d="M418 150h90" stroke="#7ae4d0" stroke-width="2" stroke-dasharray="2 8" opacity=".35"/>
+                    <path d="M80 150 255 43 430 150" fill="none" stroke="#f2cc6a" stroke-width="2" opacity=".35">
+                      <animate attributeName="d" values="M80 150 255 43 430 150;M80 150 285 43 490 150;M80 150 255 43 430 150" dur="7s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M80 150 255 43 430 150" fill="none" stroke="#f2cc6a" stroke-width="3" stroke-dasharray="6 20" stroke-linecap="round">
+                      <animate attributeName="d" values="M80 150 255 43 430 150;M80 150 285 43 490 150;M80 150 255 43 430 150" dur="7s" repeatCount="indefinite"/>
+                      <animate attributeName="stroke-dashoffset" from="52" to="0" dur="1.2s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M80 150 255 43 430 150" fill="none" stroke="#7ae4d0" stroke-width="2" stroke-dasharray="2 24" stroke-linecap="round" opacity=".8">
+                      <animate attributeName="d" values="M80 150 255 43 430 150;M80 150 285 43 490 150;M80 150 255 43 430 150" dur="7s" repeatCount="indefinite"/>
+                      <animate attributeName="stroke-dashoffset" from="0" to="52" dur="1.4s" repeatCount="indefinite"/>
+                    </path>
+                    <circle cx="255" cy="43" r="5" fill="#f2cc6a"><animate attributeName="cx" values="255;285;255" dur="7s" repeatCount="indefinite"/></circle>
+                    <g transform="translate(80 150)">
+                      <circle r="26" fill="none" stroke="#f2cc6a" opacity=".2">
+                        <animate attributeName="r" values="20;36" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values=".5;0" dur="2s" repeatCount="indefinite"/>
+                      </circle>
+                      <rect x="-17" y="-13" width="34" height="26" rx="6" fill="#373b45" stroke="#f2cc6a" stroke-width="2"/>
+                      <path d="M-8-5h16M-8 1h16M-8 7h8" stroke="#f2cc6a" stroke-width="2"/>
+                    </g>
+                    <text x="80" y="195" class="nlos-label" text-anchor="middle">mmWave RADAR</text>
+                    <g transform="translate(430 150)">
+                      <animateTransform attributeName="transform" type="translate" values="430 150;490 150;430 150" dur="7s" repeatCount="indefinite"/>
+                      <path d="M-25-12v-16h14M25-12v-16H11M-25 12v16h14M25 12v16H11" fill="none" stroke="#7ae4d0" stroke-width="2.5"/>
+                      <rect x="-15" y="-10" width="5" height="20" rx="2" fill="#858b98"/>
+                      <rect x="10" y="-10" width="5" height="20" rx="2" fill="#858b98"/>
+                      <rect x="-11" y="-17" width="22" height="34" rx="7" fill="#e3e7ef"/>
+                      <circle cy="-5" r="5" fill="#4c7e7a"/>
+                      <path d="M-7 9H7" stroke="#4c7e7a" stroke-width="2"/>
+                      <g>
+                        <path d="M-5-40h35" stroke="#7ae4d0" stroke-width="2.5" marker-end="url(#nlos-arrow)"/>
+                        <animate attributeName="opacity" values="1;0" calcMode="discrete" dur="7s" repeatCount="indefinite"/>
+                      </g>
+                      <g opacity="0">
+                        <path d="M5-40h-35" stroke="#7ae4d0" stroke-width="2.5" marker-end="url(#nlos-arrow)"/>
+                        <animate attributeName="opacity" values="0;1" calcMode="discrete" dur="7s" repeatCount="indefinite"/>
+                      </g>
+                    </g>
+                    <text x="460" y="195" class="nlos-label nlos-label--target" text-anchor="middle">HIDDEN TARGET</text>
+                  </svg>
+                </div>
+                <h4 class="h4 testimonials-item-title" data-testimonials-title><ion-icon class="news-accent-icon" name="radio-outline" aria-hidden="true"></ion-icon>NLoS Tracking Preprint Released</h4>
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>Our preprint "Doppler-aided Position-Velocity Tracking of Hidden Objects using mmWave Radar" is now available on arXiv.</p>
+                </div>
+                <div class="news-resource-links">
+                  <a href="./radar_nlos/">Project page <span aria-hidden="true">↗</span></a>
+                  <a href="https://arxiv.org/abs/2610.34085" target="_blank" rel="noopener noreferrer">Read preprint <span aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </li>
+
+            <li class="testimonials-item news-item" aria-roledescription="slide" aria-label="2 of 2">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="news-logo-hidden">
@@ -417,6 +494,11 @@
             </li>
 
           </ul>
+            <button class="news-nav-btn" type="button" data-news-next aria-label="Next news" aria-controls="news-slides">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+            </button>
+          </div>
+          <p class="news-carousel-status" data-news-status role="status" aria-live="polite" aria-atomic="true">1 / 2</p>
 
         </section>
 
@@ -468,6 +550,20 @@
               <!-- News selector -->
               <aside class="news-modal-side">
                 <ul class="news-modal-list">
+                  <li class="news-modal-item" data-testimonials-item>
+                    <div class="news-modal-row">
+                      <img src="./radar_nlos/assets/favicon.svg" alt="NLoS radar tracking" data-testimonials-avatar>
+                      <div class="news-modal-text">
+                        <time datetime="2026-10-25" data-testimonials-date>Oct 25, 2026</time>
+                        <h4 class="h4" data-testimonials-title>NLoS Tracking Preprint Released</h4>
+                      </div>
+                    </div>
+                    <div data-testimonials-text>
+                      <p>Our preprint "Doppler-aided Position-Velocity Tracking of Hidden Objects using mmWave Radar" is now available on arXiv. We track the position and velocity of hidden moving targets using wall-reflected mmWave radar signals.</p>
+                      <div class="news-resource-links"><a href="./radar_nlos/">Project page ↗</a><a href="https://arxiv.org/abs/2610.34085" target="_blank" rel="noopener noreferrer">Read preprint ↗</a></div>
+                    </div>
+                    <button class="news-open-btn" type="button" data-news-open-detail aria-label="Read NLoS tracking preprint news"><ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
+                  </li>
                   <li class="news-modal-item" data-testimonials-item>
                     <div class="news-modal-row">
                       <img src="./assets/images/news-icpr2026.png" alt="ICPR 2026 logo" data-testimonials-avatar>
@@ -1262,7 +1358,7 @@
   <!--
     - custom js link
   -->
-  <script type="module" src="./assets/js/script.js"></script>
+  <script type="module" src="./assets/js/script.js?v=20261030-news-carousel"></script>
 
   <!--
     - ionicon link

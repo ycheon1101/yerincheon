@@ -132,6 +132,92 @@ if (newsBackBtn) {
 modalCloseBtn.addEventListener("click", testimonialsModalClose);
 overlay.addEventListener("click", testimonialsModalClose);
 
+// Featured news: arrows, keyboard navigation, and native touch scrolling.
+const newsCarousel = document.querySelector("[data-news-carousel]");
+if (newsCarousel) {
+  const newsList = newsCarousel.querySelector(".news-list");
+  const newsSlides = [...newsList.querySelectorAll(".news-item")];
+  const newsStatus = document.querySelector("[data-news-status]");
+  const motionButton = document.querySelector("[data-news-motion-toggle]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let currentNews = 0;
+  let userPausedMotion = false;
+  let carouselVisible = true;
+  let scrollTimer;
+
+  const updateNewsMotion = () => {
+    const paused = userPausedMotion || reducedMotion.matches;
+    newsCarousel.dataset.motionPaused = String(paused || !carouselVisible);
+    motionButton.disabled = reducedMotion.matches;
+    motionButton.setAttribute("aria-pressed", String(paused));
+    motionButton.textContent = reducedMotion.matches ? "Reduced motion" : paused ? "Resume motion" : "Pause motion";
+    motionButton.setAttribute("aria-label", reducedMotion.matches ? "News animations follow your reduced motion preference" : paused ? "Resume News animations" : "Pause News animations");
+    newsSlides.forEach((slide, index) => {
+      slide.querySelectorAll("[data-news-animation]").forEach(svg => {
+        if (paused || !carouselVisible || index !== currentNews) {
+          svg.pauseAnimations();
+          if (reducedMotion.matches) svg.setCurrentTime(1.75);
+        } else {
+          svg.unpauseAnimations();
+        }
+      });
+    });
+  };
+
+  const setCurrentNews = index => {
+    currentNews = index;
+    newsSlides.forEach((slide, slideIndex) => {
+      const active = slideIndex === currentNews;
+      if (!active && slide.contains(document.activeElement)) newsList.focus({ preventScroll: true });
+      slide.classList.toggle("is-current", active);
+      slide.inert = !active;
+      slide.setAttribute("aria-hidden", String(!active));
+    });
+    newsStatus.textContent = `${currentNews + 1} / ${newsSlides.length}`;
+    updateNewsMotion();
+  };
+
+  const slideLeft = index => newsSlides[index].offsetLeft - newsSlides[0].offsetLeft;
+  const goToNews = index => {
+    const nextIndex = (index + newsSlides.length) % newsSlides.length;
+    setCurrentNews(nextIndex);
+    newsList.scrollTo({ left: slideLeft(nextIndex), behavior: reducedMotion.matches ? "instant" : "smooth" });
+  };
+  newsCarousel.querySelector("[data-news-prev]").addEventListener("click", () => goToNews(currentNews - 1));
+  newsCarousel.querySelector("[data-news-next]").addEventListener("click", () => goToNews(currentNews + 1));
+  newsCarousel.addEventListener("keydown", event => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    goToNews(currentNews + (event.key === "ArrowRight" ? 1 : -1));
+  });
+  // Settle on the nearest card after a swipe without fighting smooth arrow navigation.
+  newsList.addEventListener("scroll", () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      if (!newsList.clientWidth) return;
+      let nearest = 0;
+      newsSlides.forEach((slide, index) => {
+        if (Math.abs(slideLeft(index) - newsList.scrollLeft) < Math.abs(slideLeft(nearest) - newsList.scrollLeft)) nearest = index;
+      });
+      setCurrentNews(nearest);
+    }, 150);
+  }, { passive: true });
+  new ResizeObserver(() => {
+    if (newsList.clientWidth) newsList.scrollTo({ left: slideLeft(currentNews), behavior: "instant" });
+  }).observe(newsList);
+  new IntersectionObserver(entries => {
+    carouselVisible = entries[0].isIntersecting;
+    updateNewsMotion();
+  }).observe(newsCarousel);
+  motionButton.addEventListener("click", () => {
+    userPausedMotion = !userPausedMotion;
+    updateNewsMotion();
+  });
+  reducedMotion.addEventListener("change", updateNewsMotion);
+  setCurrentNews(0);
+}
+
 
 
 // custom select variables
