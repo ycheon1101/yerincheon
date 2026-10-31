@@ -1467,9 +1467,9 @@ main {
 .publication-item--radar:hover .publication-title {
   color: var(--orange-yellow-crayola);
 }
-.publication-figure--radar img {
-  object-fit: cover;
-  object-position: left center;
+.about .publication-figure--radar img {
+  object-fit: contain;
+  object-position: center;
 }
 
 
